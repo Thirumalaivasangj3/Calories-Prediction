@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  calories-prediction-api:
+    build:
+      context: .
+    ports:
+      - "8011:8011"  # Map host port 8011 to container port 8011
+    volumes:
+      - ./app:/app  # Mount the application directory
