@@ -1,70 +1,140 @@
-# Getting Started with Create React App
+# Calories Prediction API (FastAPI + Docker + React)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This project is a **calories prediction system** built using **FastAPI** for the backend and **React** for the frontend. The model predicts the number of calories burned based on input parameters like duration, heart rate, age, height, and weight. The backend is containerized using **Docker**.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## 🚀 Features
+- **FastAPI Backend** for model inference
+- **React Frontend** for user interaction
+- **Machine Learning Model** trained using Python
+- **Docker Containerization** for deployment
+- **CSV Datasets** for training the model
 
-### `npm start`
+---
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 📂 Project Structure
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+```
+📦 project-root
+├── app
+│   ├── __init__.py
+│   ├── main.py         # FastAPI application
+│   ├── model.py        # Model loading & prediction logic
+│   ├── model.pkl       # Trained ML model
+│   └── __pycache__
+├── data
+│   ├── calories.csv    # Dataset for training
+│   ├── exercise.csv    # Additional dataset
+├── train_model.py      # Script for training the model
+├── requirements.txt    # Python dependencies
+├── Dockerfile          # Docker setup for backend
+├── docker-compose.yml  # Container orchestration
+└── frontend            # React frontend
+```
 
-### `npm test`
+---
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## 🔧 Setup & Installation
 
-### `npm run build`
+### 1️⃣ Prerequisites
+Make sure you have installed:
+- **Docker & Docker Compose**
+- **Python 3.8+**
+- **Node.js & npm** (for frontend)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### 2️⃣ Clone the Repository
+```sh
+git clone https://github.com/yourusername/calories-prediction.git
+cd calories-prediction
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### 3️⃣ Install Backend Dependencies
+```sh
+cd app
+pip install -r requirements.txt
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### 4️⃣ Run the FastAPI Server
+```sh
+uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
+```
 
-### `npm run eject`
+Backend will be live at: **`http://localhost:8000`**
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### 5️⃣ Run the Frontend
+```sh
+cd frontend
+npm install
+npm start
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Frontend will be available at: **`http://localhost:3000`**
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+---
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## 🐳 Running with Docker
 
-## Learn More
+### Build and Start Containers
+```sh
+docker-compose up --build
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### Stop Containers
+```sh
+docker-compose down
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+API will be available at **`http://localhost:8000`** inside the container.
 
-### Code Splitting
+---
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## 📡 API Endpoints
 
-### Analyzing the Bundle Size
+| Method | Endpoint        | Description           |
+|--------|----------------|-----------------------|
+| POST   | `/predict`     | Predict calories      |
+| GET    | `/docs`        | OpenAPI Documentation |
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Example Prediction Request (JSON):
+```json
+{
+  "duration": 30,
+  "heart_rate": 120,
+  "age": 25,
+  "height": 175,
+  "weight": 70
+}
+```
 
-### Making a Progressive Web App
+### Example Response:
+```json
+{
+  "predicted_calories": 200
+}
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## 🛠 Technologies Used
+- **FastAPI** (Backend)
+- **React.js** (Frontend)
+- **Python** (Machine Learning)
+- **Docker & Docker Compose** (Containerization)
+- **Uvicorn** (ASGI Server)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## 📜 License
+This project is licensed under the MIT License.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+---
 
-### `npm run build` fails to minify
+## 🤝 Contributing
+Feel free to fork this repository, make changes, and submit a pull request!
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+---
+
+Happy Coding! 🚀
+
