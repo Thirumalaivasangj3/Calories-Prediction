@@ -7,6 +7,7 @@ This project is a **calories prediction system** built using **FastAPI** for the
 ## 🚀 Features
 - **FastAPI Backend** for model inference
 - **React Frontend** for user interaction
+- **Material UI** for modern UI components
 - **Machine Learning Model** trained using Python
 - **Docker Containerization** for deployment
 - **CSV Datasets** for training the model
@@ -119,6 +120,7 @@ API will be available at **`http://localhost:8000`** inside the container.
 ## 🛠 Technologies Used
 - **FastAPI** (Backend)
 - **React.js** (Frontend)
+- **Material UI** (UI Components)
 - **Python** (Machine Learning)
 - **Docker & Docker Compose** (Containerization)
 - **Uvicorn** (ASGI Server)
@@ -133,8 +135,6 @@ This project is licensed under the MIT License.
 ## 🤝 Contributing
 Feel free to fork this repository, make changes, and submit a pull request!
 
-
 ---
 
 Happy Coding! 🚀
-
