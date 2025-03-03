@@ -1,7 +1,7 @@
-// PredictionForm.js
 import React, { useState } from "react";
-import "./PredictionForm.css"; // Import the CSS file
 import { predictCalories } from "../api";
+import { CircularProgress, TextField, Button, Container, Typography, Paper, Grid } from "@mui/material";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 
 function PredictionForm() {
   const [formData, setFormData] = useState({
@@ -14,6 +14,7 @@ function PredictionForm() {
 
   const [result, setResult] = useState(null);
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -27,74 +28,76 @@ function PredictionForm() {
     e.preventDefault();
     setError("");
     setResult(null);
+    setLoading(true);
     try {
       const response = await predictCalories(formData);
       setResult(response.predicted_calories);
     } catch (err) {
       setError("Failed to fetch prediction. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="prediction-container">
-      <h2 className="title">Calories Prediction</h2>
-      <form onSubmit={handleSubmit} className="form">
-        <div className="form-group">
-          <label>Duration (minutes): </label>
-          <input
-            type="number"
-            name="duration"
-            value={formData.duration}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Heart Rate (bpm): </label>
-          <input
-            type="number"
-            name="heart_rate"
-            value={formData.heart_rate}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Age (years): </label>
-          <input
-            type="number"
-            name="age"
-            value={formData.age}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Height (cm): </label>
-          <input
-            type="number"
-            name="height"
-            value={formData.height}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label>Weight (kg): </label>
-          <input
-            type="number"
-            name="weight"
-            value={formData.weight}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <button type="submit" className="submit-button">Predict</button>
-      </form>
+    <Container maxWidth="sm">
+      <Paper elevation={3} style={{ padding: "2rem", marginTop: "2rem", textAlign: "center" }}>
+        <Grid container spacing={2} alignItems="center" justifyContent="center">
+          <Grid item>
+            <FitnessCenterIcon style={{ fontSize: 40, color: "#1976d2" }} />
+          </Grid>
+          <Grid item>
+            <Typography variant="h4" gutterBottom>
+              Smart Fitness Tracker
+            </Typography>
+          </Grid>
+        </Grid>
+        <form onSubmit={handleSubmit}>
+          {[
+            { label: "Duration (minutes)", name: "duration" },
+            { label: "Heart Rate (bpm)", name: "heart_rate" },
+            { label: "Age (years)", name: "age" },
+            { label: "Height (cm)", name: "height" },
+            { label: "Weight (kg)", name: "weight" },
+          ].map((field) => (
+            <TextField
+              key={field.name}
+              label={field.label}
+              name={field.name}
+              value={formData[field.name]}
+              onChange={handleChange}
+              fullWidth
+              margin="normal"
+              variant="outlined"
+              type="number"
+              required
+            />
+          ))}
 
-      {result && <div className="result">Predicted Calories: {result}</div>}
-      {error && <div className="error">{error}</div>}
-    </div>
+          <Button
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+            style={{ marginTop: "1rem" }}
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} color="inherit" /> : "Predict Calories"}
+          </Button>
+        </form>
+
+        {result && (
+          <Typography variant="h6" color="success.main" style={{ marginTop: "1rem" }}>
+            Predicted Calories Burned: <strong>{result}</strong>
+          </Typography>
+        )}
+        {error && (
+          <Typography variant="body1" color="error" style={{ marginTop: "1rem" }}>
+            {error}
+          </Typography>
+        )}
+      </Paper>
+    </Container>
   );
 }
 
